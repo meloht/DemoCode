@@ -13,6 +13,9 @@ namespace WindowsExcel
     public partial class FormMain : Form
     {
         private DataMange _mange = new DataMange();
+        private DataItem _data = null;
+
+        
         public FormMain()
         {
             InitializeComponent();
@@ -24,20 +27,31 @@ namespace WindowsExcel
             var dr= frmLoad.ShowDialog();
             if (dr == DialogResult.OK)
             {
-                var fdata = frmLoad.GetData();
-
-                var data = _mange.GetData(fdata.SheetName, fdata.FilePath);
-
-                if (!data.IsSuccess)
+                Utils.ShowProcessing("正在处理中，请稍候...", this, (obj) =>
                 {
-                    MessageBox.Show(data.ErrMessage);
-                }
-                else
-                {
-                   
-                    this.dataGridView1.DataSource = data.Data.Table;
-                }
+                    var fdata = frmLoad.GetData();
+
+                    var data = _mange.GetData(fdata.SheetName, fdata.FilePath);
+
+                    if (!data.IsSuccess)
+                    {
+                        MessageBox.Show(data.ErrMessage);
+                    }
+                    else
+                    {
+                        _data = data.Data;
+                        Action<DataTable> del = new Action<DataTable>(BindData);
+                        this.BeginInvoke(del, data.Data.Table);
+                        
+                    }
+                }, null);
+              
             }
+        }
+
+        private void BindData(DataTable dt)
+        {
+            this.dataGridView1.DataSource = dt;
         }
 
         private void dataGridView1_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
@@ -52,8 +66,16 @@ namespace WindowsExcel
 
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            MessageBox.Show("dataGridView1_DataBindingComplete");
            
+           
+        }
+
+        private void toolStripBtnChart_Click(object sender, EventArgs e)
+        {
+            if (_data == null)
+                return;
+            FrmChart frm = new FrmChart(_data.List);
+            frm.Show();
         }
     }
 }

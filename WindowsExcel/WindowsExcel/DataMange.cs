@@ -57,5 +57,134 @@ namespace WindowsExcel
 
             return result;
         }
+
+        public List<ItemModel> GetChartList()
+        {
+            List<ItemModel> list = new List<ItemModel>();
+
+            list.Add(new ItemModel() { Id = 0, Name = "零件号" });
+            list.Add(new ItemModel() { Id = 1, Name = "报废状态" });
+            list.Add(new ItemModel() { Id = 2, Name = "报废金额" });
+            return list;
+        }
+
+
+
+        public LineItems<double> GetErrMoneyLine(List<ExcelModel> list)
+        {
+            LineItems<double> item = new LineItems<double>();
+
+            var xdata = list.Where(p => string.IsNullOrEmpty(p.ExPeriod) == false).Select(p => p.ExPeriod).Distinct().ToList();
+            List<double> ylist = new List<double>();
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("周期跟物流核对");
+            dt.Columns.Add("报废金额");
+
+            item.XLable = "周期跟物流核对";
+            item.YLable = "报废金额";
+
+            foreach (var row in xdata)
+            {
+                var num = list.Where(p => p.ExPeriod == row && p.ExErrMoney != null).Sum(p => p.ExErrMoney);
+                double numd = 0;
+                if (num != null)
+                {
+                    numd = Math.Round(num.Value, 2);
+                }
+
+                ylist.Add(numd);
+
+                var rowd = dt.NewRow();
+                rowd["报废金额"] = numd;
+                rowd["周期跟物流核对"] = row;
+
+                dt.Rows.Add(rowd);
+            }
+
+
+            item.XPoints = xdata;
+            item.YPoints = ylist;
+            item.Table = dt;
+            return item;
+        }
+
+
+        public LineItems<int> GetErrStateLine(List<ExcelModel> list)
+        {
+            LineItems<int> item = new LineItems<int>();
+
+            var xdata = list.Where(p => string.IsNullOrEmpty(p.ExPeriod) == false).Select(p => p.ExPeriod).Distinct().ToList();
+            List<int> ylist = new List<int>();
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("周期跟物流核对");
+            dt.Columns.Add("报废状态数量");
+
+            item.XLable = "周期跟物流核对";
+            item.YLable = "报废状态数量";
+
+            foreach (var row in xdata)
+            {
+                var num = list.Where(p => p.ExPeriod == row
+                && string.IsNullOrEmpty(p.ExErrState) == false).Select(p => p.ExErrState).Distinct().Count();
+
+
+                ylist.Add(num);
+
+                var rowd = dt.NewRow();
+                rowd["报废状态数量"] = num;
+                rowd["周期跟物流核对"] = row;
+
+                dt.Rows.Add(rowd);
+            }
+
+
+            item.XPoints = xdata;
+            item.YPoints = ylist;
+            item.Table = dt;
+            return item;
+        }
+
+        public LineItems<int> GetErrItemLine(List<ExcelModel> list)
+        {
+            LineItems<int> item = new LineItems<int>();
+
+            var xdata = list.Where(p => string.IsNullOrEmpty(p.ExPeriod) == false).Select(p => p.ExPeriod).Distinct().ToList();
+            List<int> ylist = new List<int>();
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("周期跟物流核对");
+            dt.Columns.Add("零件数量");
+
+            item.XLable = "周期跟物流核对";
+            item.YLable = "零件数量";
+
+            foreach (var row in xdata)
+            {
+                var num = list.Where(p => p.ExPeriod == row
+                && string.IsNullOrEmpty(p.ExItemNo) == false).Select(p => p.ExItemNo).Distinct().Count();
+
+
+                ylist.Add(num);
+
+                var rowd = dt.NewRow();
+                rowd["零件数量"] = num;
+                rowd["周期跟物流核对"] = row;
+
+                dt.Rows.Add(rowd);
+            }
+
+
+            item.XPoints = xdata;
+            item.YPoints = ylist;
+            item.Table = dt;
+            return item;
+        }
+
+
+     
+
+
     }
 }

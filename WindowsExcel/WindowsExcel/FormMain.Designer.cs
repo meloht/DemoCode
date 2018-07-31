@@ -33,6 +33,7 @@
             this.toolStripbtnLoad = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.toolStripBtnChart = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -41,7 +42,8 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripbtnLoad,
-            this.toolStripSeparator1});
+            this.toolStripSeparator1,
+            this.toolStripBtnChart});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(987, 25);
@@ -80,6 +82,16 @@
             this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             this.dataGridView1.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dataGridView1_RowStateChanged);
             // 
+            // toolStripBtnChart
+            // 
+            this.toolStripBtnChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripBtnChart.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnChart.Image")));
+            this.toolStripBtnChart.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnChart.Name = "toolStripBtnChart";
+            this.toolStripBtnChart.Size = new System.Drawing.Size(48, 22);
+            this.toolStripBtnChart.Text = "统计图";
+            this.toolStripBtnChart.Click += new System.EventHandler(this.toolStripBtnChart_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -106,6 +118,7 @@
         private System.Windows.Forms.ToolStripButton toolStripbtnLoad;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ToolStripButton toolStripBtnChart;
     }
 }
 
