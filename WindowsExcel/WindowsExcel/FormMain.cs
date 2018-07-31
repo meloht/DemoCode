@@ -34,6 +34,7 @@ namespace WindowsExcel
                 }
                 else
                 {
+                   
                     this.dataGridView1.DataSource = data.Data.Table;
                 }
             }
@@ -47,6 +48,12 @@ namespace WindowsExcel
         private void FormMain_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            MessageBox.Show("dataGridView1_DataBindingComplete");
+           
         }
     }
 }
