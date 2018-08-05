@@ -27,29 +27,44 @@ namespace WindowsExcel
             var dr= frmLoad.ShowDialog();
             if (dr == DialogResult.OK)
             {
-                Utils.ShowProcessing("正在处理中，请稍候...", this, (obj) =>
+                //Utils.ShowProcessing("正在处理中，请稍候...", this, (obj) =>
+                //{
+                //    var fdata = frmLoad.GetData();
+
+                //    var data = _mange.GetData(fdata.SheetName, fdata.FilePath);
+
+                //    if (!data.IsSuccess)
+                //    {
+                //        MessageBox.Show(data.ErrMessage);
+                //    }
+                //    else
+                //    {
+                //        _data = data.Data;
+                //        Action<List<ExcelModel>> del = new Action<List<ExcelModel>>(BindData);
+                //        this.BeginInvoke(del, data.Data.List);
+
+                //    }
+                //}, null);
+
+
+                var fdata = frmLoad.GetData();
+
+                var data = _mange.GetData(fdata.SheetName, fdata.FilePath);
+
+                if (!data.IsSuccess)
                 {
-                    var fdata = frmLoad.GetData();
+                    MessageBox.Show(data.ErrMessage);
+                }
+                else
+                {
+                    _data = data.Data;
+                    this.dataGridView1.DataSource = data.Data.List;
 
-                    var data = _mange.GetData(fdata.SheetName, fdata.FilePath);
-
-                    if (!data.IsSuccess)
-                    {
-                        MessageBox.Show(data.ErrMessage);
-                    }
-                    else
-                    {
-                        _data = data.Data;
-                        Action<DataTable> del = new Action<DataTable>(BindData);
-                        this.BeginInvoke(del, data.Data.Table);
-                        
-                    }
-                }, null);
-              
+                }
             }
         }
 
-        private void BindData(DataTable dt)
+        private void BindData(List<ExcelModel> dt)
         {
             this.dataGridView1.DataSource = dt;
         }

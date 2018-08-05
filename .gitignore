@@ -7,5 +7,9 @@
 /WindowsExcel/WindowsExcel/bin/Debug
 /WindowsExcel/WindowsExcel/obj/Debug
 /WindowsExcel/.vs/WindowsExcel
+<<<<<<< HEAD
 /Puzzle/Puzzle/obj
 /Puzzle/.vs
+=======
+*.user
+>>>>>>> 687e04dd6b9e079d24314e2a6daf06186d8c7c96
