@@ -13,3 +13,8 @@
 =======
 *.user
 >>>>>>> 687e04dd6b9e079d24314e2a6daf06186d8c7c96
+/Puzzle/Puzzle/bin/Debug
+/WindowsExcel/UnitTestProject1/bin/Release
+/WindowsExcel/WindowsExcel/bin/Release
+/WindowsExcel/WindowsExcel/obj/Release
+/WindowsExcel/UnitTestProject1/obj/Release
