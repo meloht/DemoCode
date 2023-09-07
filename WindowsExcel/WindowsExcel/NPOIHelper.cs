@@ -94,6 +94,10 @@ namespace WindowsExcel
                     {
                         fileStream.Close();
                     }
+                    if (workbook != null)
+                    {
+                        workbook.Close();
+                    }
                 }
             }
 
@@ -147,9 +151,10 @@ namespace WindowsExcel
 
         public static void DataTableToExcel(string sheetName, DataTable dt, ExcelExt excelExt, Stream outStream)
         {
+            NPOI.SS.UserModel.IWorkbook book = null;
             try
             {
-                NPOI.SS.UserModel.IWorkbook book = null;
+
                 if (excelExt == ExcelExt.Xls)
                 {
                     book = new NPOI.HSSF.UserModel.HSSFWorkbook();
@@ -193,6 +198,13 @@ namespace WindowsExcel
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+            }
+            finally
+            {
+                if(book!=null)
+                {
+                    book.Close();
+                }
             }
 
         }
